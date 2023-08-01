@@ -232,7 +232,7 @@ def add_node_elevations_google(
         url = url_template.format(locations, api_key)
 
         # download and append these elevation results to list of all results
-        response_json = _elevation_request(url, pause)        
+        response_json = _elevation_request(url, pause)
         results.extend(response_json["results"])
 
     # sanity check that all our vectors have the same number of elements
