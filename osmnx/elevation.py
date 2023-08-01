@@ -232,7 +232,7 @@ def add_node_elevations_google(
         url = url_template.format(locations, api_key)
 
         # download and append these elevation results to list of all results
-        response_json = _elevation_request(url, pause)
+        response_json = _elevation_request(url, pause)        
         results.extend(response_json["results"])
 
     # sanity check that all our vectors have the same number of elements
@@ -287,5 +287,9 @@ def _elevation_request(url, pause):
     )
 
     response_json = _downloader._parse_response(response)
+
+    if 'error' in response_json:
+        raise Exception(f"Elevation API error; status: {response_json.get('status', None)}, message: {response_json['error']}")
+    
     _downloader._save_to_cache(url, response_json, response.status_code)
     return response_json
